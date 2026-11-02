@@ -1,0 +1,14 @@
+[env]
+# portable CPU code for almost any x86-64
+GGML_NATIVE = "OFF"
+GGML_AVX = "ON"
+GGML_AVX2 = "ON"
+GGML_FMA = "ON"
+GGML_F16C = "ON"
+GGML_BMI2 = "ON"
+# link the C runtime statically on Windows so the portable exe doesn't need the VC redistributable
+# whisper.cpp (built by CMake) must use the same runtime
+CMAKE_MSVC_RUNTIME_LIBRARY = "MultiThreaded"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

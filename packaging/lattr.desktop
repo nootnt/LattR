@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=LattR
+Comment=Transcribe and edit audio recordings
+Exec=lattr %f
+Icon=lattr
+Terminal=false
+Categories=Audio;
+MimeType=audio/mpeg;audio/mp4;audio/x-m4a;audio/wav;audio/x-wav;audio/flac;audio/ogg;audio/opus;audio/aac;
+StartupWMClass=lattr

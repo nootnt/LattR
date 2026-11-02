@@ -1,0 +1,95 @@
+# Builds the Linux AppImage and the portable Windows zip, publishing v* tags as releases
+# Caches (Vulkan SDK, cargo, compiled dependencies) keep warm runs to a few minutes
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  appimage:
+    runs-on: ubuntu-latest
+    # oldest supported glibc: the AppImage runs on Ubuntu 22.04 / Debian 12 / Fedora 36 and newer
+    container: ubuntu:22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .ci/vulkan-sdk
+            target/appimage-tools
+          key: linux-tools-${{ hashFiles('scripts/ci-deps-linux.sh', 'scripts/build-appimage.sh') }}
+      - run: bash scripts/ci-deps-linux.sh .ci/vulkan-sdk
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            target/release
+          key: linux-cargo-${{ hashFiles('Cargo.lock', '.cargo/config.toml') }}
+      - run: cargo test --release --locked
+      - run: bash scripts/build-appimage.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appimage
+          path: dist/*.AppImage
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-latest
+    env:
+      VULKAN_SDK: C:\VulkanSDK\min
+      # short path: whisper.cpp's nested Vulkan build hits the 260-character limit
+      CARGO_TARGET_DIR: C:\lattr-target
+    steps:
+      - uses: actions/checkout@v4
+      - id: vulkan
+        uses: actions/cache@v4
+        with:
+          path: C:\VulkanSDK\min
+          key: windows-vulkan-${{ hashFiles('scripts/ci-vulkan-windows.ps1') }}
+      - if: steps.vulkan.outputs.cache-hit != 'true'
+        run: scripts/ci-vulkan-windows.ps1 C:\VulkanSDK\min
+        shell: pwsh
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            C:\lattr-target\release
+          key: windows-cargo-${{ hashFiles('Cargo.lock', '.cargo/config.toml') }}
+      - run: scripts/build-windows.ps1
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/*.zip
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [appimage, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

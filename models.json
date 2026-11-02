@@ -1,0 +1,75 @@
+{
+  "large-v3-turbo-q5_0": [
+    {
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin",
+      "path": "ggml-large-v3-turbo-q5_0.bin",
+      "sha256": "394221709cd5ad1f40c46e6031ca61bce88931e6e088c188294c6d5a55ffa7e2"
+    }
+  ],
+  "large-v3-q5_0": [
+    {
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-q5_0.bin",
+      "path": "ggml-large-v3-q5_0.bin",
+      "sha256": "d75795ecff3f83b5faa89d1900604ad8c780abd5739fae406de19f23ecd98ad1"
+    }
+  ],
+  "large-v3": [
+    {
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin",
+      "path": "ggml-large-v3.bin",
+      "sha256": "64d182b440b98d5203c4f9bd541544d84c605196c4f7b845dfa11fb23594d1e2"
+    }
+  ],
+  "small-q5_1": [
+    {
+      "url": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small-q5_1.bin",
+      "path": "ggml-small-q5_1.bin",
+      "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb"
+    }
+  ],
+  "wespeaker-resnet34-LM": [
+    {
+      "url": "https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet34-LM/resolve/main/avg_model",
+      "path": "speaker/wespeaker-resnet34-LM.pt",
+      "sha256": "9872b375f2c6a3851ca471cbbf59e06efd23a627d78bf5872e1f0269fd298449"
+    }
+  ],
+  "wespeaker-resnet221-LM": [
+    {
+      "url": "https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet221-LM/resolve/main/voxceleb_resnet221_LM.pt",
+      "path": "speaker/wespeaker-resnet221-LM.pt",
+      "sha256": "47d76239f1e865b273e31e30f691959061ff6565ed6c4e7be9639a65d9662eb5"
+    }
+  ],
+  "wespeaker-resnet293-LM": [
+    {
+      "url": "https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet293-LM/resolve/main/avg_model.pt",
+      "path": "speaker/wespeaker-resnet293-LM.pt",
+      "sha256": "e7b8447ea84345e26432461b4dda224d1af34a3985a438268e0dfbbde059b1ce"
+    }
+  ],
+  "omniASR-CTC-300M-v2": [
+    {
+      "url": "https://dl.fbaipublicfiles.com/mms/omniASR-CTC-300M-v2.pt",
+      "path": "omniasr/omniASR-CTC-300M-v2.pt",
+      "sha256": "8ce340ada22435d189908a8af67e3bb04899b6f2f5329d036248b9c3e38d2b50"
+    },
+    {
+      "url": "https://dl.fbaipublicfiles.com/mms/omniASR_tokenizer_written_v2.model",
+      "path": "omniasr/omniASR_tokenizer_written_v2.model",
+      "sha256": "8aa11a1092142ef472537476ef6e76541123e2f0d789b79f3ebd119008240b1e"
+    }
+  ],
+  "omniASR-CTC-1B-v2": [
+    {
+      "url": "https://dl.fbaipublicfiles.com/mms/omniASR-CTC-1B-v2.pt",
+      "path": "omniasr/omniASR-CTC-1B-v2.pt",
+      "sha256": "354f981756aa8f41591ea363e45b9c4eba1ec5144c2273af82e747efbb08919c"
+    },
+    {
+      "url": "https://dl.fbaipublicfiles.com/mms/omniASR_tokenizer_written_v2.model",
+      "path": "omniasr/omniASR_tokenizer_written_v2.model",
+      "sha256": "8aa11a1092142ef472537476ef6e76541123e2f0d789b79f3ebd119008240b1e"
+    }
+  ]
+}
